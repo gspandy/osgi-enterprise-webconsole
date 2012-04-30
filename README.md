@@ -1,2 +1,2 @@
-osgi-enterprise-webconsole
+OSGi Web Console
 ==========================
