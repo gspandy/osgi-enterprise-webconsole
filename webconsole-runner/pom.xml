@@ -1,12 +1,58 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>webconsole</artifactId>
-    <groupId>org.danielsoft.osgi.enterprise</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>webconsole-runner</artifactId>
-  <packaging>pom</packaging>
-  <name>OSGi Web Console - OSGi Framework Runner(s)</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>webconsole</artifactId>
+		<groupId>org.danielsoft.osgi.enterprise</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>webconsole-runner</artifactId>
+	<packaging>pom</packaging>
+	<name>OSGi Web Console - OSGi Framework Runner(s)</name>
+
+	<properties>
+		<felix.http.version>2.2.0</felix.http.version>
+	</properties>
+
+	<dependencies>
+		<!-- Internal -->
+		<dependency>
+			<groupId>org.danielsoft.osgi.enterprise</groupId>
+			<artifactId>webconsole-extjs-wrapper</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.danielsoft.osgi.enterprise</groupId>
+			<artifactId>webconsole-ui</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- OSGi HTTP Service implementation (for auction-buyer-http) -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.http.api</artifactId>
+			<version>${felix.http.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.http.base</artifactId>
+			<version>${felix.http.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.http.bundle</artifactId>
+			<version>${felix.http.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.http.jetty</artifactId>
+			<version>${felix.http.version}</version>
+		</dependency>
+		<!-- Web Console -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.webconsole</artifactId>
+			<version>3.1.8</version>
+		</dependency>
+	</dependencies>
 
 </project>
