@@ -9,5 +9,10 @@
 	<packaging>pom</packaging>
 	<name>OSGi Web Console</name>
 	<url>https://github.com/danielpacak/osgi-enterprise-webconsole</url>
+	<modules>
+		<module>webconsole-extjs-wrapper</module>
+		<module>webconsole-ui</module>
+		<module>webconsole-runner</module>
+	</modules>
 
 </project>
