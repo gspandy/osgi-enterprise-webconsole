@@ -3,40 +3,26 @@
 Copyright 2010-2011 Daniel Pacak, Inc. All rights reserved.
 -->
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="Author" content="Daniel Pacak, pacak.daniel@gmail.com" />
-    <title>OSGi Web Console - ${project.version}</title>
-    <link rel="stylesheet" type="text/css" href="../extjs/4.1.0/resources/css/ext-all.css">
-    <link rel="stylesheet" type="text/css" href="./css/web-console.css">
-    <script type="text/javascript" src="../extjs/4.1.0/bootstrap.js"></script>
-    <script type="text/javascript" src="./WebConsole.js"></script>
-    <script type="text/javascript" src="./MainPanel.js"></script>
-    <script type="text/javascript" src="./BundleTreePanel.js"></script>
-    <script type="text/javascript" src="./BundleInfoWindow.js"></script>
-    <script type="text/javascript" src="./BundleInstallWindow.js"></script>
-    <script type="text/javascript" src="./AboutWindow.js"></script>
-    <script type="text/javascript">
-      Ext.Loader.setConfig({enabled: true});
-      Ext.Loader.setPath('Ext.ux', './ux');
-      Ext.require([
-        'Ext.grid.*',
-        'Ext.data.*',
-        'Ext.util.*',
-        'Ext.Action',
-        'Ext.tab.*',
-        'Ext.button.*',
-        'Ext.form.*',
-        'Ext.layout.container.Card',
-        'Ext.layout.container.Border'
-        //'Ext.ux.PreviewPlugin',
-        //'Ext.ux.statusbar.StatusBar'
-      ]);
-      Ext.onReady(function() {
-        var app = new WebConsole.App();
-      });
-    </script>
-  </head>
-  <body>
-  </body>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="Author" content="Daniel Pacak, pacak.daniel@gmail.com" />
+	<title>OSGi Web Console - ${project.version}</title>
+	<link rel="stylesheet" type="text/css" href="../extjs/4.1.0/resources/css/ext-all.css">
+	<link rel="stylesheet" type="text/css" href="./css/web-console.css">
+	<script type="text/javascript" src="../extjs/4.1.0/bootstrap.js"></script>
+	<script type="text/javascript" src="./WebConsole.js"></script>
+	<script type="text/javascript" src="./MainPanel.js"></script>
+	<script type="text/javascript" src="./BundleTreePanel.js"></script>
+	<script type="text/javascript" src="./BundleInfoWindow.js"></script>
+	<script type="text/javascript" src="./BundleInstallWindow.js"></script>
+	<script type="text/javascript" src="./AboutWindow.js"></script>
+	<script type="text/javascript">
+		Ext.Loader.setConfig({enabled : true});
+		Ext.onReady(function() {
+			var app = new WebConsole.App();
+		});
+	</script>
+	</head>
+	<body>
+	</body>
 </html>
