@@ -28,7 +28,7 @@ Ext.define('WebConsole.MainPanel', {
 				scope : this
 			}, '->', {
 				text : 'About',
-				handler : this.onHelpClick,
+				handler : this.onAboutClick,
 				scope : this
 			} ]
 		});
@@ -216,9 +216,8 @@ Ext.define('WebConsole.MainPanel', {
     reportWin.show();
   },
 
-  onHelpClick: function() {
-    var win = Ext.create('widget.helpwindow');
-
+  onAboutClick: function() {
+    var win = Ext.create('widget.aboutwindow');
     win.show();
   },
 
