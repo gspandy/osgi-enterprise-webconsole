@@ -16,32 +16,25 @@ Ext.define('WebConsole.MainPanel', {
     this.callParent(arguments);
   },
 
-  createToolbar: function() {
-    this.toolbar = Ext.create('widget.toolbar', {
-      items: [
-        {
-          xtype: 'buttongroup',
-          title: 'Bundle',
-          columns: 3,
-          items: [
-            {text: 'Reload', handler: this.onReloadClick, scope: this},
-            {text: 'Install', handler: this.onImportClick, scope: this}
-          ]
-        },
-        '->',
-        {
-          xtype: 'buttongroup',
-          title: 'Info',
-          columns: 2,
-          items: [
-            {text: 'About', handler: this.onHelpClick, scope: this}
-          ]
-        }
-      ]
-    });
+	  createToolbar : function() {
+		this.toolbar = Ext.create('widget.toolbar', {
+			items : [ {
+				text : 'Reload',
+				handler : this.onReloadClick,
+				scope : this
+			}, {
+				text : 'Install',
+				handler : this.onImportClick,
+				scope : this
+			}, '->', {
+				text : 'About',
+				handler : this.onHelpClick,
+				scope : this
+			} ]
+		});
 
-    return this.toolbar;
-  },
+		return this.toolbar;
+	},
 
   createBundleTreePanel: function() {
     this.networkPanel = Ext.create('widget.bundletreepanel', {
