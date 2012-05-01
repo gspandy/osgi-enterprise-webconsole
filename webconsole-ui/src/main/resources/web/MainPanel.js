@@ -7,10 +7,10 @@ Ext.define('RiskAnalyzer.MainPanel', {
     Ext.apply(this, {
       layout: 'border',
       items: [
-        //this.createNetworkPanel(),
+        this.createBundleTreePanel()
         //this.createMapPanel()
-      ],
-      dockedItems: this.createToolbar()
+      ]//,
+      //dockedItems: this.createToolbar()
     });
 
     this.callParent(arguments);
@@ -85,11 +85,11 @@ Ext.define('RiskAnalyzer.MainPanel', {
     return this.toolbar;
   },
 
-  createNetworkPanel: function() {
-    this.networkPanel = Ext.create('widget.networkpanel', {
+  createBundleTreePanel: function() {
+    this.networkPanel = Ext.create('widget.bundletreepanel', {
       region: 'west',
       padding: '5 0 5 5',
-      width: 250,
+      width: 350,
       listeners: {
         itemclick: this.onTreeItemClick,
         itemdblclick: this.onTreeItemDblClick,
