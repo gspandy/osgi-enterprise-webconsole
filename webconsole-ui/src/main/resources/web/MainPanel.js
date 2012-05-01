@@ -24,7 +24,7 @@ Ext.define('WebConsole.MainPanel', {
 				scope : this
 			}, {
 				text : 'Install',
-				handler : this.onImportClick,
+				handler : this.onBundleInstallClick,
 				scope : this
 			}, '->', {
 				text : 'About',
@@ -109,41 +109,21 @@ Ext.define('WebConsole.MainPanel', {
     this.networkPanel.update();
   },
 
-  onImportClick: function() {
-    var win = Ext.create('widget.importwindow', {
+  onBundleInstallClick: function() {
+    var win = Ext.create('widget.bundleinstallwindow', {
       listeners: {
         scope: this,
-        networkimported: this.onNetworkImported
+        bundleinstalled: this.onBundleInstalled
       }
     });
 
     win.show();
   },
 
-  onNetworkImported: function(win) {
+  onBundleInstalled: function(win) {
     this.networkPanel.update();
-    this.mapPanel.update();
   },
 
-  onExportClick: function() {
-    //alert("show network display");
-    try {
-      Ext.destroy(Ext.get('testIframe'));
-    } catch(e) {
-      alert("error " + e);
-    }
-
-    Ext.core.DomHelper.append(document.body, {
-      tag: 'iframe',
-      id:'testIframe',
-      css: 'display:none;visibility:hidden;height:0px;',
-      src: 'Export.do',
-      frameBorder: 0,
-      width: 0,
-      height: 0
-    });
-
-  },
 
   onAddNodeClick: function() {
     var win = Ext.create('widget.nodewindow', {
