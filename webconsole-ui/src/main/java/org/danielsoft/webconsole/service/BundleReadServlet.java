@@ -32,12 +32,12 @@ public class BundleReadServlet extends HttpServlet {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{");
 		sb.append("bundleId : " + bundle.getBundleId() + ",");
-		sb.append("location : " + bundle.getLocation() + ",");
+		sb.append("location : '" + bundle.getLocation() + "',");
+		sb.append("version : '" + bundle.getVersion() + "',");
 		sb.append("lastModified : " + bundle.getLastModified() + ",");
-		sb.append("state : " + state(bundle.getState()) + ",");
-		sb.append("symbolicName : " + bundle.getSymbolicName() + ",");
-		sb.append("servicesInUse : " + bundle.getServicesInUse() + ",");
-		sb.append("headers : " + bundle.getHeaders());
+		sb.append("state : '" + state(bundle.getState()) + "',");
+		sb.append("symbolicName : '" + bundle.getSymbolicName() + "',");
+		sb.append("servicesInUse : '" + bundle.getServicesInUse() + "'");
 		sb.append("}");
 		return sb.toString();
 	}

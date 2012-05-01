@@ -85,15 +85,10 @@ Ext.define('WebConsole.MainPanel', {
 
   onReadBundleSuccess: function(response) {
 	  alert(response.responseText);
-    /*var values = Ext.JSON.decode(response.responseText);
-    var win = Ext.create('widget.nodewindow', {
-      listeners: {
-        scope: this,
-        nodecreated: this.onNodeCreated
-      }
-    });
+    var values = Ext.JSON.decode(response.responseText);
+    var win = Ext.create('widget.bundleinfowindow');
     win.setFieldValues(values);
-    win.show();*/
+    win.show();
   },
 
   onReadBundleFailure: function() {
