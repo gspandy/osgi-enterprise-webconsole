@@ -26,6 +26,10 @@ Ext.define('WebConsole.MainPanel', {
 				text : 'Install',
 				handler : this.onBundleInstallClick,
 				scope : this
+			}, {
+				text : 'Extensions',
+				handler : this.onExtensionsClick,
+				scope : this
 			}, '->', {
 				text : 'About',
 				handler : this.onAboutClick,
@@ -195,110 +199,10 @@ Ext.define('WebConsole.MainPanel', {
     var win = Ext.create('widget.aboutwindow');
     win.show();
   },
-
-  // handle on delete node click
-  onDeleteNodeClick: function() {
-    Ext.MessageBox.confirm('Delete Node', 'Are you sure you want to do that?', this.deleteNode, this);
-  },
-
-  deleteNode: function(btn) {
-    if ('yes' === btn ) {
-      var selectionModel = this.networkPanel.getSelectionModel();
-      var modelArray = selectionModel.getSelection();
-      var model = modelArray[0]; // we should only have one selection
-      var rawId = model.get('id'); // raw node id
-      var id = parseInt(rawId.substring(2));
-
-      Ext.Ajax.request({
-          url: 'DeleteNode.do',
-          params: {
-              id: id
-          },
-          success: this.onDeleteNodeSuccess,
-          failure: this.onDeleteNodeFailure,
-          scope: this
-      });
-    }
-  },
-
-  onDeleteEdgeClick: function() {
-    Ext.MessageBox.confirm('Delete Edge', 'Are you sure you want to do that?', this.deleteEdge, this);
-  },
-
-  deleteEdge: function(btn) {
-    if ('yes' === btn ) {
-      var selectionModel = this.networkPanel.getSelectionModel();
-      var modelArray = selectionModel.getSelection();
-      var model = modelArray[0]; // we should only have one selection
-      var rawId = model.get('id'); // raw node id
-      var id = parseInt(rawId.substring(2));
-
-      Ext.Ajax.request({
-          url: 'DeleteEdge.do',
-          params: {
-              edge_id: id
-          },
-          success: this.onDeleteEdgeSuccess,
-          failure: this.onDeleteEdgeFailure,
-          scope: this
-      });
-    }
-  },
-
-  onDeleteEdgeSuccess: function(response) {
-    this.onRefreshClick();
-  },
-
-  onDeleteEdgeFailure: function() {
-    Ext.MessageBox.show({
-      title: 'Application Error',
-      msg: 'There was a problem processing your request. Please try again later or contact your system administrator.',
-      buttons: Ext.MessageBox.OK,
-      icon: Ext.MessageBox.ERROR
-    });
-  },
-
-  onDeleteNodeSuccess: function(response) {
-    var text = response.responseText;
-    //alert("node has been deleted");
-    this.onRefreshClick();
-  },
-
-  onDeleteNodeFailure: function() {
-    Ext.MessageBox.show({
-      title: 'Application Error',
-      msg: 'There was a problem processing your request. Please try again later or contact your system administrator.',
-      buttons: Ext.MessageBox.OK,
-      icon: Ext.MessageBox.ERROR
-    });
-  },
-
-  // TODO REMOVE THIS FUNCTION - IT'S ONLY FOR TESTING
-  onRemoveMarkersClick: function() {
-    this.mapPanel.deleteMarkers();
-    this.mapPanel.deleteEdges();
-  },
-
-  onAutoCenterClick: function() {
-    //alert('center map');
-    this.mapPanel.autoCenter();
-
-  },
-
-  onDisplayNodesCheck: function(item, checked) {
-//alert("on display node check: " + checked);
-this.mapPanel.displayMarkers(checked);
-  },
-
-  onDisplayEdgeCheck: function(item, checked) {
-//alert("on display edge check: " + checked);
-this.mapPanel.displayEdges(checked);
-  },
-
-  onFindAddressClick: function() {
-    //alert('find address');
-    var win = Ext.create('widget.addresswindow');
-    win.show();
+  
+  onExtensionsClick : function() {
+	 alert('show extensions');
   }
+
 
 });

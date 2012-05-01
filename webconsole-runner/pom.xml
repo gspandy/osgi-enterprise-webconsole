@@ -26,6 +26,11 @@
 			<artifactId>webconsole-ui</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.danielsoft.osgi.enterprise</groupId>
+			<artifactId>webconsole-extension-hello</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- OSGi HTTP Service implementation (for auction-buyer-http) -->
 		<dependency>
 			<groupId>org.apache.felix</groupId>

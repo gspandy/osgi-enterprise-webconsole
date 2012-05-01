@@ -18,6 +18,7 @@
 		<module>webconsole-extjs-wrapper</module>
 		<module>webconsole-ui</module>
 		<module>webconsole-runner</module>
+		<module>webconsole-extension-hello</module>
 	</modules>
 
 	<dependencyManagement>
@@ -30,6 +31,12 @@
 			<dependency>
 				<groupId>org.danielsoft.osgi.enterprise</groupId>
 				<artifactId>webconsole-ui</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Web Console Extensions -->
+			<dependency>
+				<groupId>org.danielsoft.osgi.enterprise</groupId>
+				<artifactId>webconsole-extension-hello</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- OSGi Framework -->
