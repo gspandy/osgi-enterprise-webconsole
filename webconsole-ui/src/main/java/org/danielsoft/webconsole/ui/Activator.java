@@ -1,5 +1,6 @@
 package org.danielsoft.webconsole.ui;
 
+import org.danielsoft.webconsole.service.BundleReadServlet;
 import org.danielsoft.webconsole.service.BundleServlet;
 import org.danielsoft.webconsole.service.BundleTreeServlet;
 import org.osgi.framework.BundleActivator;
@@ -20,9 +21,10 @@ public class Activator implements BundleActivator {
 		
 		BundleServlet bundleServlet = new BundleServlet(bundleContext);
 		BundleTreeServlet bundleTreeServlet = new BundleTreeServlet(bundleContext);
+		BundleReadServlet bundleReadServlet = new BundleReadServlet(bundleContext);
 		httpService.registerServlet("/webconsole/service/bundles", bundleServlet, null, null);
 		httpService.registerServlet("/webconsole/service/bundles/tree", bundleTreeServlet, null, null);
-
+		httpService.registerServlet("/webconsole/service/bundles/read", bundleReadServlet, null, null);
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {

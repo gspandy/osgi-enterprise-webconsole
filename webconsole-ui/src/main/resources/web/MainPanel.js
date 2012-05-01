@@ -1,4 +1,4 @@
-Ext.define('RiskAnalyzer.MainPanel', {
+Ext.define('WebConsole.MainPanel', {
   extend: 'Ext.panel.Panel',
 
   alias: 'widget.mainpanel',
@@ -9,8 +9,8 @@ Ext.define('RiskAnalyzer.MainPanel', {
       items: [
         this.createBundleTreePanel()
         //this.createMapPanel()
-      ]//,
-      //dockedItems: this.createToolbar()
+      ],
+      dockedItems: this.createToolbar()
     });
 
     this.callParent(arguments);
@@ -21,62 +21,20 @@ Ext.define('RiskAnalyzer.MainPanel', {
       items: [
         {
           xtype: 'buttongroup',
-          title: 'Network',
+          title: 'Bundle',
           columns: 3,
           items: [
-            {text: 'Refresh', iconCls: 'feed', handler: this.onRefreshClick, scope: this},
-            {text: 'Import', iconCls: 'feed-add', handler: this.onImportClick, scope: this},
-            {text: 'Export', iconCls: 'feed-remove', handler: this.onExportClick, scope: this}
-          ]
-        },
-        {
-          xtype: 'buttongroup',
-          itemId: 'nodeButtons',
-          title: 'Node',
-          columns: 2,
-          items: [
-            {text: 'New Node', iconCls: 'feed-add', handler: this.onAddNodeClick, scope: this},
-            {text: 'Delete Node', iconCls: 'feed-remove', handler: this.onDeleteNodeClick, itemId: 'deleteNodeBtn', disabled: true, scope: this}
-          ]
-        },
-        {
-          xtype: 'buttongroup',
-          itemId: 'edgeButtons',
-          title: 'Edge',
-          columns: 2,
-          items: [
-            {text: 'New Edge', iconCls: 'feed-add', handler: this.onAddEdgeClick, scope: this},
-            {text: 'Delete Edge', iconCls: 'feed-remove', handler: this.onDeleteEdgeClick, itemId: 'deleteEdgeBtn', disabled: true, scope: this}
-          ]
-        },
-        {
-          xtype: 'buttongroup',
-          title: 'Tools',
-          columns: 1,
-          items: [
-            {text: 'Simulation', iconCls: 'feed', handler: this.onFrequencyDistributionClick, scope: this}
+            {text: 'Reload', handler: this.onReloadClick, scope: this},
+            {text: 'Install', handler: this.onImportClick, scope: this}
           ]
         },
         '->',
         {
           xtype: 'buttongroup',
-          title: 'Map',
-          columns: 3,
-          items: [
-            /*{text: 'Find Address', iconCls: 'feed', handler: this.onFindAddressClick, scope: this},*/
-            {text: 'Auto Center', iconCls: 'feed', handler: this.onAutoCenterClick, scope: this},
-            {text: 'Display', iconCls: 'feed',
-              menu: [{text: 'Nodes', checked: true, checkHandler: this.onDisplayNodesCheck, scope: this},
-                     {text: 'Edges', checked: true, checkHandler: this.onDisplayEdgeCheck, scope: this}]}
-          ]
-        },
-        {
-          xtype: 'buttongroup',
           title: 'Info',
           columns: 2,
           items: [
-            {text: 'About', iconCls: 'feed', handler: this.onHelpClick, scope: this}
-            //{text: 'Logout', iconCls: 'feed'}
+            {text: 'About', handler: this.onHelpClick, scope: this}
           ]
         }
       ]
@@ -91,115 +49,50 @@ Ext.define('RiskAnalyzer.MainPanel', {
       padding: '5 0 5 5',
       width: 350,
       listeners: {
-        itemclick: this.onTreeItemClick,
-        itemdblclick: this.onTreeItemDblClick,
+        itemclick: this.onBundleClick,
+        itemdblclick: this.onBundleDblClick,
         scope: this
       }
     });
     return this.networkPanel;
   },
 
-  createMapPanel: function() {
-    this.mapPanel = Ext.create('widget.mappanel', {
-      listeners: {
-        nodeclick: this.onMapNodeClick,
-        edgeclick: this.onMapEdgeClick,
-        scope: this
-      },
-      region: 'center',
-      padding: 5
-    });
-    return this.mapPanel;
-  },
-
-  onMapNodeClick: function(component, nodeId) {
-    this.readNode(nodeId);
-  },
-
-  onMapEdgeClick: function(component, edgeId) {
-    this.readEdge(edgeId);
-  },
-
-  onTreeItemClick: function(view, record, item, index, e, eOpts) {
+  onBundleClick: function(view, record, item, index, e, eOpts) {
     var rawId = record.get('id');
-    if (rawId) {
+    /*if (rawId) {
       var id = parseInt(rawId.substring(2));
       if (rawId.charAt(0) == 'n') {
         this.onNetworkNodeClicked(id);
       } else if (rawId.charAt(0) == 'e') {
         this.onNetworkEdgeClicked(id);
       }
-    } else {
-      // TODO JUST DISABLE DELETE BUTTONS
-      this.toolbar.getComponent('nodeButtons').getComponent('deleteNodeBtn').setDisabled(true);
-      this.toolbar.getComponent('edgeButtons').getComponent('deleteEdgeBtn').setDisabled(true);
-    }
+    }*/
   },
 
-  onTreeItemDblClick: function(view, record, item, index, e, eOpts) {
-    //alert("tree double clicked!");
-    var rawId = record.get('id');
-    if (rawId) {
-      var id = parseInt(rawId.substring(2));
-      if (rawId.charAt(0) == 'n') {
-        this.readNode(id);
-      } else if (rawId.charAt(0) == 'e') {
-        this.readEdge(id);
-      }
+  onBundleDblClick: function(view, record, item, index, e, eOpts) {
+    var bundleId = record.get('id');
+    if (bundleId) {
+      this.readBundle(bundleId);
     }
   },
 
   // @param nodeId node identifier
-  readNode: function(nodeId) {
+  readBundle: function(bundleId) {
 
     Ext.Ajax.request({
-        url: 'ReadNode.do',
+        url: 'service/bundles/read',
         params: {
-          node_id: nodeId
+          bundleId: bundleId
         },
-        success: this.onReadNodeSuccess,
-        failure: this.onReadNodeFailure,
+        success: this.onReadBundleSuccess,
+        failure: this.onReadBundleFailure,
         scope: this
       });
   },
-  
-  readEdge: function(edgeId) {
-    Ext.Ajax.request({
-      url: 'ReadEdge.do',
-      params: {
-        edge_id: edgeId
-      },
-      success: this.onReadEdgeSuccess,
-      failure: this.onReadEdgeFailure,
-      scope: this
-    });
-  },
 
-  onReadEdgeSuccess: function(response) {
-    var json = Ext.JSON.decode(response.responseText);
-    var win = Ext.create('widget.edgewindow', {
-      listeners: {
-        edgecreated: this.onEdgeCreated,
-        scope: this
-      }
-    });
-    win.setSource(json.nodes);
-    win.setTarget(json.nodes);
-    win.setFieldValues(json.edge);
-    win.show();
-  },
-
-  onReadEdgeFailure: function() {
-    Ext.MessageBox.show({
-      title: 'Application Error',
-      msg: 'There was a problem processing your request. Please try again later or contact your system administrator.',
-      buttons: Ext.MessageBox.OK,
-      icon: Ext.MessageBox.ERROR
-    });
-  },
-
-  onReadNodeSuccess: function(response) {
-    var values = Ext.JSON.decode(response.responseText);
+  onReadBundleSuccess: function(response) {
+	  alert(response.responseText);
+    /*var values = Ext.JSON.decode(response.responseText);
     var win = Ext.create('widget.nodewindow', {
       listeners: {
         scope: this,
@@ -207,10 +100,10 @@ Ext.define('RiskAnalyzer.MainPanel', {
       }
     });
     win.setFieldValues(values);
-    win.show();
+    win.show();*/
   },
 
-  onReadNodeFailure: function() {
+  onReadBundleFailure: function() {
     Ext.MessageBox.show({
       title: 'Application Error',
       msg: 'There was a problem processing your request. Please try again later or contact your system administrator.',
@@ -219,24 +112,8 @@ Ext.define('RiskAnalyzer.MainPanel', {
     });
   },
 
-  onNetworkNodeClicked: function(id) {
-    //alert("Node has been clicked: " + id);
-    this.toolbar.getComponent('nodeButtons').getComponent('deleteNodeBtn').setDisabled(false);
-    this.toolbar.getComponent('edgeButtons').getComponent('deleteEdgeBtn').setDisabled(true);
-
-  },
-
-  onNetworkEdgeClicked: function(id) {
-    //alert("Edge has been clicked: " + id);
-    this.toolbar.getComponent('edgeButtons').getComponent('deleteEdgeBtn').setDisabled(false);
-    this.toolbar.getComponent('nodeButtons').getComponent('deleteNodeBtn').setDisabled(true);
-  },
-
-  onRefreshClick: function() {
+  onReloadClick: function() {
     this.networkPanel.update();
-    this.mapPanel.update();
-    this.toolbar.getComponent('nodeButtons').getComponent('deleteNodeBtn').setDisabled(true);
-    this.toolbar.getComponent('edgeButtons').getComponent('deleteEdgeBtn').setDisabled(true);
   },
 
   onImportClick: function() {
