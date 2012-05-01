@@ -1,6 +1,6 @@
 @echo off
 SETLOCAL
-set _SCRIPTDIR_=%~dp0
+set _SCRIPTDIR_=.
 
 set PAX_CONSTRUCT_VERSION=1.4
 set PAX_PLUGIN=org.ops4j:maven-pax-plugin:%PAX_CONSTRUCT_VERSION%
