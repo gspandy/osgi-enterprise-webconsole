@@ -19,6 +19,7 @@
 		<module>webconsole-ui</module>
 		<module>webconsole-runner</module>
 		<module>webconsole-extension-hello</module>
+		<module>webconsole-extension-weather</module>
 	</modules>
 
 	<dependencyManagement>
@@ -37,6 +38,11 @@
 			<dependency>
 				<groupId>org.danielsoft.osgi.enterprise</groupId>
 				<artifactId>webconsole-extension-hello</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.danielsoft.osgi.enterprise</groupId>
+				<artifactId>webconsole-extension-weather</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- OSGi Framework -->
