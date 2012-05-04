@@ -162,12 +162,6 @@ Ext.define('WebConsole.MainPanel', {
                     icon   : 'delete.gif',  // Use a URL in the icon config
                     tooltip: 'Sell stock',
                     handler: this.myHandler
-                    /*handler: function(grid, rowIndex, colIndex) {
-                        var rec = myStore.getAt(rowIndex);
-                        var componentClass = rec.get('componentClass');
-                        alert("Run [" + componentClass + "] extension..");
-                        this.runExtension(componentClass);
-                    }*/
                 } ]
 		        }
 		        
@@ -186,7 +180,6 @@ Ext.define('WebConsole.MainPanel', {
   },
   
   myHandler : function(grid, rowIndex, colIndex) {
-	alert('i am your handler');
 	var store = grid.getStore();
     var rec = store.getAt(rowIndex);
     var componentClass = rec.get('componentClass');
