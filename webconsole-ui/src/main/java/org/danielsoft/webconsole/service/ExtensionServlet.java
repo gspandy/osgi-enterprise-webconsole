@@ -37,7 +37,7 @@ public class ExtensionServlet extends HttpServlet {
 		
 		for (int i = 0; i < extensions.size(); i++) {
 			WebConsoleExtension ext = extensions.get(i);
-			sb.append(String.format("{'name' : '%s', 'desc' : '%s'}", ext.getName(), ext.getDescription()));
+			sb.append(String.format("{'name' : '%s', 'desc' : '%s', 'componentClass' : '%s'}", ext.getName(), ext.getDescription(), ext.getComponentClass()));
 			if (i < extensions.size() - 1) {
 				sb.append(",");
 			}

@@ -73,9 +73,7 @@ Ext.define('WebConsole.MainPanel', {
     }
   },
 
-  // @param nodeId node identifier
   readBundle: function(bundleId) {
-
     Ext.Ajax.request({
         url: 'service/bundles/read',
         params: {
@@ -88,7 +86,6 @@ Ext.define('WebConsole.MainPanel', {
   },
 
   onReadBundleSuccess: function(response) {
-	  alert(response.responseText);
     var values = Ext.JSON.decode(response.responseText);
     var win = Ext.create('widget.bundleinfowindow');
     win.setFieldValues(values);
@@ -123,57 +120,6 @@ Ext.define('WebConsole.MainPanel', {
     this.networkPanel.update();
   },
 
-
-  onAddNodeClick: function() {
-    var win = Ext.create('widget.nodewindow', {
-        listeners: {
-          scope: this,
-          nodecreated: this.onNodeCreated
-        }
-    });
-
-    win.show();
-  },
-
-
-  onAddEdgeClick: function() {
-    // Before showing Edge Dialog fetch available nodes
-    Ext.Ajax.request({
-      url: 'AvailableNodes.do',
-      success: this.onAddEdgeSuccess,
-      failure: this.onAddEdgeFailure,
-      scope: this
-    });
-  },
-
-  onAddEdgeSuccess: function(response) {
-    var nodes = Ext.JSON.decode(response.responseText);
-    var win = Ext.create('widget.edgewindow', {
-      listeners: {
-        edgecreated: this.onEdgeCreated,
-        scope: this
-      }
-    });
-
-    win.setSource(nodes);
-    win.setTarget(nodes);
-    win.show();
-  },
-
-  onAddEdgeFailure: function() {
-    Ext.MessageBox.show({
-      title: 'Application Error',
-      msg: 'There was a problem processing your request. Please try again later or contact your system administrator.',
-      buttons: Ext.MessageBox.OK,
-      icon: Ext.MessageBox.ERROR
-    });
-  },
-
-  onEdgeCreated: function(win) {
-    this.networkPanel.update();
-    this.mapPanel.update();
-  },
-
   onAboutClick: function() {
     var win = Ext.create('widget.aboutwindow');
     win.show();
@@ -185,7 +131,8 @@ Ext.define('WebConsole.MainPanel', {
 	      extend: 'Ext.data.Model',
 	      fields: [
 	          {name: 'name', type: 'string'},
-	          {name: 'desc',  type: 'string'}
+	          {name: 'desc',  type: 'string'},
+	          {name: 'componentClass', type : 'string'}
 	      ]
 	  });
 	  var myStore = Ext.create('Ext.data.Store', {
@@ -202,11 +149,11 @@ Ext.define('WebConsole.MainPanel', {
 	  
 		var grid = Ext.create('Ext.grid.Panel', {
 		    //title: 'Simpsons',
-			bodyBorder: false,
 			sortableColumns: false,
 		    store: myStore,
 		    columns: [
 		        { header: 'Name',  dataIndex: 'name' },
+		        { header: 'Component', dataIndex: 'componentClass'},
 		        { header: 'Description', dataIndex: 'desc', flex: 1 },
 		        
 		        {xtype:'actioncolumn',
@@ -214,10 +161,13 @@ Ext.define('WebConsole.MainPanel', {
 	            items: [{
                     icon   : 'delete.gif',  // Use a URL in the icon config
                     tooltip: 'Sell stock',
-                    handler: function(grid, rowIndex, colIndex) {
+                    handler: this.myHandler
+                    /*handler: function(grid, rowIndex, colIndex) {
                         var rec = myStore.getAt(rowIndex);
-                        alert("Run [" + rec.get('name') + "] extension..");
-                    }
+                        var componentClass = rec.get('componentClass');
+                        alert("Run [" + componentClass + "] extension..");
+                        this.runExtension(componentClass);
+                    }*/
                 } ]
 		        }
 		        
@@ -226,9 +176,8 @@ Ext.define('WebConsole.MainPanel', {
 		
 		 var win = Ext.create('Ext.window.Window', {
 			    title: 'Installed Extensions',
-			    bodyBorder: false,
 			    height: 200,
-			    width: 400,
+			    width: 600,
 			    layout: 'fit'
 			});
 		 
@@ -236,6 +185,16 @@ Ext.define('WebConsole.MainPanel', {
 		 win.show();
   },
   
+  myHandler : function(grid, rowIndex, colIndex) {
+	alert('i am your handler');
+	var store = grid.getStore();
+    var rec = store.getAt(rowIndex);
+    var componentClass = rec.get('componentClass');
+    //alert("Run [" + componentClass + "] extension..");
+    var extensionWin = Ext.create(componentClass);
+    extensionWin.show();
+  },
+
   onExtensionsClick2 : function() {
 	 //alert('show extensions');
 	  var win = Ext.create('Ext.window.Window', {

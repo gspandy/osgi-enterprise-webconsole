@@ -1,7 +1,7 @@
-Ext.define('WebConsole.HelpWindow', {
+Ext.define('WebConsole.Extension.HelloWindow', {
   extend: 'Ext.window.Window',
 
-  alias: 'widget.aboutwindow',
+  alias: 'widget.hello.hellowindow',
   plain: true,
 
   initComponent: function() {
